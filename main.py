@@ -4,6 +4,8 @@ def filter_tasks_by_completion(tasks, completed: bool = True):
     """Return only tasks matching the completed flag."""
     return [task for task in tasks if task.is_completed() == completed]
 
+
+
 if __name__ == "__main__":
     # Create an owner with time constraints
     owner = Owner(name="Alice", email="alice@example.com", time_available=8.0)

@@ -18,6 +18,7 @@ classDiagram
         -breed: str
         -age: float
         -tasks: List~Task~
+        +getName() str
         +getTasks() List~Task~
         +addTask(task: Task) void
         +removeTask(task: Task) void
@@ -27,8 +28,14 @@ classDiagram
         -name: str
         -duration: float
         -priority: int
+        -description: str
         -category: str
         -completed: bool
+        +getName() str
+        getDuration() float
+        +getPriority() int
+        +getCategory() str
+        isCompleted() bool
         +markComplete() void
         +updatePriority(priority: int) void
     }

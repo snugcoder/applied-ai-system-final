@@ -41,3 +41,10 @@ pip install -r requirements.txt
 5. Add tests to verify key behaviors.
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
+
+# Applied AI System Final Planning
+
+## Planning 
+
+This project must do something useful with AI -> Plan & Complete a task step by step
+-> Reliability or Testing System : because the system I am improving is a To Do list + Scheduler, I want it to be able to know when the schedule will not work. Thats crucial. It should be able to move things around and ask the Owner if thats alright. 

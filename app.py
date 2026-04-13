@@ -1,6 +1,6 @@
-from math import e
 import streamlit as st
 from pawpal_system import Owner, Pet, Task, Scheduler
+from verify import ScheduleVerifier
 
 # initializing pawpal objects
 if "owner" not in st.session_state:
@@ -114,24 +114,42 @@ if st.button("Generate schedule"):
     if st.session_state.owner is None:
         st.warning("Please create an owner first.")
     elif not st.session_state.tasks:
-        st.warning("Save at least one task before generating a schedule")
+        st.warning("Save at least one task before generating a schedule.")
     else:
         scheduler = Scheduler(st.session_state.owner)
         scheduled_tasks = scheduler.generate_plan(date="today")
+        all_tasks = scheduler.get_all_tasks()
         st.session_state.scheduler = scheduler
-    st.markdown("### Schedule Explanation")
-    st.text(scheduler.get_plan_explanation())
-    
-    if scheduled_tasks:
-        st.markdown("### Scheduled Tasks")
-        st.table([
-            {
-                "task": t.get_name(),
-                "duration (hrs)": round(t.get_duration(), 2),
-                "priority": t.get_priority(),
-                "category": t.get_category(),
-            }
-            for t in scheduled_tasks
-        ])
-    else:
-        st.info("No tasks fit within the available time. Try increasing hours or reducing durations.")
+
+        st.markdown("### Schedule Explanation")
+        st.text(scheduler.get_plan_explanation())
+
+        if scheduled_tasks:
+            st.markdown("### Proposed Tasks")
+            st.table([
+                {
+                    "task": t.get_name(),
+                    "duration (hrs)": round(t.get_duration(), 2),
+                    "priority": t.get_priority(),
+                    "category": t.get_category(),
+                }
+                for t in scheduled_tasks
+            ])
+        else:
+            st.info("No tasks fit within the available time. Try increasing hours or reducing durations.")
+
+        st.markdown("### AI Verification")
+        with st.spinner("Verifying schedule with Claude..."):
+            verifier = ScheduleVerifier()
+            result = verifier.verify_schedule(
+                st.session_state.owner, scheduled_tasks, all_tasks
+            )
+
+        if result.is_valid():
+            st.success(f"Schedule approved. {result.feedback}")
+        else:
+            st.error(f"Schedule rejected: {result.feedback}")
+            if result.suggestions:
+                st.markdown("**Suggestions:**")
+                for suggestion in result.suggestions:
+                    st.warning(suggestion)
