@@ -24,3 +24,6 @@ This project must do something useful with AI -> Plan & Complete a task step by 
 (Owner → Pet → Task) and scheduling flow (Scheduler → Verification → Result)
 A more detailed example is provided in ```dataflow_uml.md```
 
+## Testing
+
+Reliability Signal: A complete product that passes testing is a scheduler that regenerates a schedule based on the LLM evaluator optimizer pattern. When the LLM evaluates the schedule against metrics like greedy scheduling and omptimizing schedules for time constraints and priority, and provide a useful feedback, that would indicate a complete project. 
