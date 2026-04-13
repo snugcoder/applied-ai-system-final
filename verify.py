@@ -15,6 +15,7 @@ Requires GEMINI_API_KEY environment variable.
 
 import json
 import os
+from dotenv import load_dotenv
 from dataclasses import dataclass, field
 from typing import List
 
@@ -22,7 +23,7 @@ import google.generativeai as genai
 
 from pawpal_system import Owner, Task
 
-
+load_dotenv(override=True)  # Load environment variables from .env file
 # ---------------------------------------------------------------------------
 # Result dataclass
 # ---------------------------------------------------------------------------
